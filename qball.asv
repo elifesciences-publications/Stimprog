@@ -1,0 +1,107 @@
+function varargout = qball(varargin)
+% QBALL M-file for qball.fig
+%      QBALL, by itself, creates a new QBALL or raises the existing
+%      singleton*.
+%
+%      H = QBALL returns the handle to a new QBALL or the handle to
+%      the existing singleton*.
+%
+%      QBALL('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in QBALL.M with the given input arguments.
+%
+%      QBALL('Property','Value',...) creates a new QBALL or raises the
+%      existing singleton*.  Starting from the left, property value pairs are
+%      applied to the GUI before qball_OpeningFunction gets called.  An
+%      unrecognized property name or invalid value makes property application
+%      stop.  All inputs are passed to qball_OpeningFcn via varargin.
+%
+%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
+%      instance to run (singleton)".
+%
+% See also: GUIDE, GUIDATA, GUIHANDLES
+
+% Edit the above text to modify the response to help qball
+
+% Last Modified by GUIDE v2.5 12-Feb-2007 11:21:18
+
+% Begin initialization code - DO NOT EDIT
+gui_Singleton = 1;
+gui_State = struct('gui_Name',       mfilename, ...
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @qball_OpeningFcn, ...
+                   'gui_OutputFcn',  @qball_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
+if nargin && ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+% End initialization code - DO NOT EDIT
+
+
+% --- Executes just before qball is made visible.
+function qball_OpeningFcn(hObject, eventdata, handles, varargin)
+% This function has no output args, see OutputFcn.
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% varargin   command line arguments to qball (see VARARGIN)
+
+% Choose default command line output for qball
+handles.output = hObject;
+
+% Update handles structure
+guidata(hObject, handles);
+
+% UIWAIT makes qball wait for user response (see UIRESUME)
+% uiwait(handles.figure1);
+
+
+% --- Outputs from this function are returned to the command line.
+function varargout = qball_OutputFcn(hObject, eventdata, handles) 
+% varargout  cell array for returning output args (see VARARGOUT);
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+
+% --- Executes on button press in go.
+function go_Callback(hObject, eventdata, handles)
+% hObject    handle to go (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+npts = 5187; 
+delete(instrfind)
+
+
+ba = 0;
+while ba < npts,
+    ba = s.BytesAvailable;
+end
+
+try
+    poop = fread(s,s.BytesAvailable);
+    if poop(1)==0 & poop(2)==0,poop=poop(3:(end-1));end
+    x=5*(poop(find(poop==1)+1)-128);%/255;
+    y=5*(poop(find(poop==0)+1)-128);%/255;
+end
+
+
+cx = cumsum(x);
+cy = cumsum(y);
+
+plot(cx,cy,'.');
+maxdat=max(abs([cx; cy]));
+if ~maxdat, maxdat = 1;, end
+set(handles.axes1,'xlim',[-maxdat maxdat],'ylim',[-maxdat maxdat])%,'visible','off')
+drawnow
+

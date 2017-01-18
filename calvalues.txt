@@ -1,0 +1,3 @@
+forward attenuator at 4.5
+left at 10
+right at 11.5
