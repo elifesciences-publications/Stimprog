@@ -1,4 +1,7 @@
 # Stimprog
+
+### This code is associated with the paper "How spatial release from masking may fail to function in a highly directional auditory system". eLife, 2017. 10.7554/eLife.20731
+
 Stimprog Stimulus Presentation and Data Collection Software
 
 Version 5.14b ‘treadmill’
